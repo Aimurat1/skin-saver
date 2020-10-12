@@ -1,16 +1,53 @@
 <html lang='en'>
 <head>
   <meta charset='utf-8'>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel='stylesheet' href='../static/style.css'>
   <script src='../static/client.js'></script>
+  <!-- <script src='../static/server.js'></script> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </head>
 <body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+      <a class="navbar-brand" href="#">SkinSaver</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    </div>
+  </nav>
+<script>
+  document.getElementById("map").style.visibility = 'hidden';
+</script>
 <div>
   <div class='center'>
-    <div class='title'>Classify Skin diseases</div>
-    <p>
-      We scanning for "Actinic keratosis', 'Basal cell carcinoma", "Dermatofibroma", "Melanoma", "Nevus", "Pigmented benign keratosis", "Seborrheic keratosis", "Squamous cell carcinoma", "Vascular lesion"
+    <div class='title' style="font-weight: 700; font-size: 50px; color: #fff">SkinSaver</div>
+    <p style="font-size: 18px; color: white">
+      Нейронная сеть для анализирования изображений
+      Просто загрузите изображение пораженной части кожи.
     </p>
+    <p>
+      <button class="analyze-button" type="button" data-toggle="collapse" data-target="#multiCollapseExample1" aria-expanded="false" aria-controls="multiCollapseExample1">Список распознаваемых болезней</button>
+    </p>
+    <div class="row" >
+      <div class="col">
+        <div class="collapse multi-collapse" id="multiCollapseExample1">
+          <div class="card card-body"  id="card" >
+            <strong>Старческий кератоз</strong> (Actinic keratosis)
+            <strong>Базально-клеточная карцинома</strong> (Basal cell carcinoma)
+            <strong>Дерматофиброма</strong> (Dermatofibroma)
+            <strong>Меланома</strong> (Melanoma)
+            <strong>Невус</strong> (Nevus)
+            <strong>Пигментный доброкачественный кератоз</strong> (Pigmented benign keratosis)
+            <strong>Себорейный кератоз</strong> (Seborrheic keratosis)
+            <strong>Плоскоклеточная карцинома</strong> (Squamous cell carcinoma)
+            <strong>Поражение сосудов</strong> (Vascular lesion)
+          </div>
+        </div>
+      </div>
+    </div>    
     <div class='content'>
       <div class='no-display'>
         <input id='file-input'
@@ -20,21 +57,61 @@
                accept='image/*'
                onchange='showPicked(this)'>
       </div>
-      <button class='choose-file-button' type='button' onclick='showPicker()'>Select Image</button>
+      <button class='choose-file-button' type='button' onclick='showPicker()'>Выберите изображение</button>
       <div class='upload-label'>
-        <label id='upload-label'>No file chosen</label>
+        <label id='upload-label'>Файл не выбран</label>
       </div>
       <div>
-        <img id='image-picked' class='no-display' alt='Chosen Image' height='200'>
+        <img id='image-picked' class='no-display' alt='Chosen Image' style="border-radius: 5px;" height='200'>
       </div>
       <div class='analyze'>
         <button id='analyze-button' class='analyze-button' type='button' onclick='analyze()'>Analyze</button>
+      </div><br>
+      <div class="alert alert-primary information" role="alert" style="width: 220px; margin: auto;">
+        <span id="infspan"></span>
       </div>
       <div class='result-label'>
-        <label id='result-label'></label>
+        <span id='result-label' hidden></span>
       </div>
     </div>
   </div>
+  <div class="center" id="map">
+    <a href="https://www.google.com/maps/search/%D0%B4%D0%B5%D1%80%D0%BC%D0%B0%D1%82%D0%BE%D0%BB%D0%BE%D0%B3/@43.6501982,51.1741004,13z?hl=ru-KZ"><button class="btn-primary rounded">Найти специалиста на карте</button></a>
+      </div>
+  </div>
+  
+  <script>
+$(function () {
+  $('[data-toggle="popover"]').popover()
+})
+
+    var alldiseases = [
+    {prefix: 'actinic_keratosis', full : 'Старческий кератоз'},
+    {prefix: 'basal_cell_carcinoma', full : 'Базально-клеточная карцинома'},
+    {prefix: 'dermatofibroma', full : 'Дерматофиброма'},
+    {prefix: 'melanoma', full : 'Меланома'},
+    {prefix: 'nevus', full : 'Невус'},
+    {prefix: 'pigmented_benign_keratosis', full : 'Пигментный доброкачественный кератоз'},
+    {prefix: 'seborrheic_keratosis', full : 'Себорейный кератоз'},
+    {prefix: 'squamous_cell_carcinoma', full : 'Плоскоклеточная карцинома'},
+    {prefix: 'vascular_lesion', full : 'Поражение сосудов'}
+    ];
+
+    
+
+    var result=document.getElementById("result-label").innerText;  
+    if(result !== ""){
+      for(var i=0; i < alldiseases.length; i++) {
+        if(result == alldiseases[i].prefix){
+          var infrussian = alldiseases[i].full;
+          el("infspan").innerHTML = infrussian;
+          document.getElementById("information").style.visibility = 'visible';
+          document.getElementById("map").style.visibility = 'visible';
+          console.log(infrussian);
+        }
+      }
+    }
+  </script>
 </div>
 </body>
 </html>
