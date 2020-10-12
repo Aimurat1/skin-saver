@@ -14,11 +14,23 @@ function showPicked(input) {
   reader.readAsDataURL(input.files[0]);
 }
 
+var alldiseases = [
+  {prefix: 'actinic_keratosis', full : 'Старческий кератоз'},
+  {prefix: 'basal_cell_carcinoma', full : 'Базально-клеточная карцинома'},
+  {prefix: 'dermatofibroma', full : 'Дерматофиброма'},
+  {prefix: 'melanoma', full : 'Меланома'},
+  {prefix: 'nevus', full : 'Невус'},
+  {prefix: 'pigmented_benign_keratosis', full : 'Пигментный доброкачественный кератоз'},
+  {prefix: 'seborrheic_keratosis', full : 'Себорейный кератоз'},
+  {prefix: 'squamous_cell_carcinoma', full : 'Плоскоклеточная карцинома'},
+  {prefix: 'vascular_lesion', full : 'Поражение сосудов'}
+  ];
+
 function analyze() {
   var uploadFiles = el("file-input").files;
-  if (uploadFiles.length !== 1) alert("Пожалуйста, выберите файл!");
+  if (uploadFiles.length !== 1) alert("Please select a file to analyze!");
 
-  el("analyze-button").innerHTML = "Анализируем...";
+  el("analyze-button").innerHTML = "Analyzing...";
   var xhr = new XMLHttpRequest();
   var loc = window.location;
   xhr.open("POST", `${loc.protocol}//${loc.hostname}:${loc.port}/analyze`,
@@ -29,9 +41,17 @@ function analyze() {
   xhr.onload = function(e) {
     if (this.readyState === 4) {
       var response = JSON.parse(e.target.responseText);
-      el("result-label").innerHTML = `${response["result"]}`;
+      el("result-label").innerHTML = `Result = ${response["result"]}`;
+      for(var i=0; i < alldiseases.length; i++) {
+        if(response["result"] == alldiseases[i].prefix){
+          var infrussian = alldiseases[i].full;
+          el("infspan").innerHTML = infrussian;
+          document.getElementById("map").style.visibility = 'visible';
+          console.log(infrussian);
+        }
+      }
     }
-    el("analyze-button").innerHTML = "Анализировать";
+    el("analyze-button").innerHTML = "Analyze";
   };
 
   var fileData = new FormData();
