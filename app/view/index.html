@@ -14,8 +14,6 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
       <a class="navbar-brand" href="#">SkinSaver</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
     </button>
     </div>
   </nav>
@@ -27,7 +25,7 @@
     <div class='title' style="font-weight: 700; font-size: 50px; color: #fff">SkinSaver</div>
     <p style="font-size: 18px; color: white">
       Нейронная сеть для анализирования изображений
-      Просто загрузите изображение пораженной части кожи.
+      Просто загрузите изображение пораженного участка кожи.
     </p>
     <p>
       <button class="analyze-button" type="button" data-toggle="collapse" data-target="#multiCollapseExample1" aria-expanded="false" aria-controls="multiCollapseExample1">Список распознаваемых болезней</button>
@@ -71,9 +69,11 @@
       <div class="alert alert-primary information" role="alert" style="width: 220px; margin: auto;">
         <span id="infspan"></span>
       </div>
+      <div class="alert alert-danger" id="alert-danger" role="alert" style="margin-top: 20px; width: 50%; margin-left: auto; margin-right: auto; display: none;">
+        Вероятность диагноза ниже 70%, это может быть связано с отсутствием болезни в базе данных, а также с некачественным изображением. Просим вас загрузить изображение с лучшим качеством и освещением.
+      </div>
       <div class='result-label'>
         <span id='result-label' hidden></span>
-        <span id='result-label1' hidden></span>
       </div>
       <a target="_blank" href="https://www.dropbox.com/sh/envhjhutow9bd7s/AACv5xtaSvPZY1DTJrORZ4B8a?dl=0" style="color: white">Ссылка на фотографии болезней для тестирования программы</a>
     </div>
