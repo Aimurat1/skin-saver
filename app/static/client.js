@@ -54,7 +54,7 @@ function analyze() {
       }
         if(parseInt(response["percent"]) < 70){
           document.getElementById("alert-danger").style.display = "block";
-          $("#alert-danger").first().hide().fadeIn(200).delay(2000).fadeOut(9000, function () { $(this).css("display","none"); });
+          $("#alert-danger").first().hide().fadeIn(200).delay(9000).fadeOut(2000, function () { $(this).css("display","none"); });
         }
     }
     el("analyze-button").innerHTML = "Analyze";
