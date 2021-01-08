@@ -42,12 +42,12 @@ function analyze() {
     if (this.readyState === 4) {
       var response = JSON.parse(e.target.responseText);
       el("result-label").innerHTML = `Result = ${response["result"]} Percentage = ${response["percent"]}`;
-      console.log('${response["percent"]}');
+      console.log(response["percent"]);
       console.log("working");
       for(var i=0; i < alldiseases.length; i++) {
         if(response["result"] == alldiseases[i].prefix){
           var infrussian = alldiseases[i].full;
-          el("infspan").innerHTML = infrussian + "\n Вероятность: " + "${response["percent"]}" + "%";
+          el("infspan").innerHTML = infrussian + "Точность" + response["result"];
           document.getElementById("map").style.visibility = 'visible';
           console.log(infrussian);
         }
