@@ -41,7 +41,7 @@ function analyze() {
   xhr.onload = function(e) {
     if (this.readyState === 4) {
       var response = JSON.parse(e.target.responseText);
-      el("result-label").innerHTML = `Result = ${response["result"]}`;
+      el("result-label").innerHTML = `Result = ${response["result"]} Percentage = ${response["percent"]}`;
       for(var i=0; i < alldiseases.length; i++) {
         if(response["result"] == alldiseases[i].prefix){
           var infrussian = alldiseases[i].full;
