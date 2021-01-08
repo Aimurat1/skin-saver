@@ -52,7 +52,7 @@ function analyze() {
           console.log(infrussian);
         }
       }
-        if(parseInt(response["percent"]) <= 70{
+        if(parseInt(response["percent"]) < 70){
           document.getElementById("alert-danger").style.display = "block";
           $("#alert-danger").first().hide().fadeIn(200); 
         }
