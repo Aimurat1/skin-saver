@@ -47,7 +47,7 @@ function analyze() {
       for(var i=0; i < alldiseases.length; i++) {
         if(response["result"] == alldiseases[i].prefix){
           var infrussian = alldiseases[i].full;
-          el("infspan").innerHTML = infrussian + \n + "Вероятность: " + "${response["percent"]}" + "%";
+          el("infspan").innerHTML = infrussian \n + "Вероятность: " + "${response["percent"]}" + "%";
           document.getElementById("map").style.visibility = 'visible';
           console.log(infrussian);
         }
