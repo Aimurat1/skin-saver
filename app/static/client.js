@@ -42,7 +42,7 @@ function analyze() {
     if (this.readyState === 4) {
       var response = JSON.parse(e.target.responseText);
       el("result-label").innerHTML = `Result = ${response["result"]} Percentage = ${response["percent"]}`;
-      var percent = "${response["percent"]}";
+      var percent = ${response["percent"]};
       console.log('${response["percent"]}');
       console.log("working");
       for(var i=0; i < alldiseases.length; i++) {
