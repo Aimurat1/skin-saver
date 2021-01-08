@@ -62,7 +62,8 @@ async def analyze(request):
     img = open_image(BytesIO(img_bytes))
     prediction = learn.predict(img)[0]
     pred_prob = round(torch.max(learn.predict(img)[2]).item()*100)
-    return JSONResponse({'result': str(prediction), 'percent': str(pred_prob)})
+    return JSONResponse({'result': str(prediction)})
+    return JSONResponse({'percent': str(pred_prob)})
 
 
 
