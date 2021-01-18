@@ -58,6 +58,7 @@ function analyze() {
           $("#alert-danger").first().hide().fadeIn(200).delay(9000).fadeOut(2000, function () { $(this).css("display","none"); });
         }
     }
+    
     el("analyze-button").innerHTML = "Сканировать";
   };
 
