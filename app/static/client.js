@@ -28,6 +28,7 @@ var alldiseases = [
 
 function analyze() {
   var uploadFiles = el("file-input").files;
+    el("analyze-button").innerHTML = 'Сканирование...<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="margin-left: 5px"></span>';
   if (uploadFiles.length !== 1) alert("Please select a file to analyze!");
 
   el("analyze-button").innerHTML = "Analyzing...";
@@ -57,7 +58,7 @@ function analyze() {
           $("#alert-danger").first().hide().fadeIn(200).delay(9000).fadeOut(2000, function () { $(this).css("display","none"); });
         }
     }
-    el("analyze-button").innerHTML = "Analyze";
+    el("analyze-button").innerHTML = "Сканировать";
   };
 
   var fileData = new FormData();
